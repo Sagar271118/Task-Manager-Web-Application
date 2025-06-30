@@ -1,5 +1,12 @@
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS lists;
 DROP TABLE IF EXISTS items;
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
+);
 
 CREATE TABLE lists (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -12,5 +19,8 @@ CREATE TABLE items (
     list_id INTEGER NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     content TEXT NOT NULL,
-    FOREIGN KEY (list_id) REFERENCES lists (id)
+    due_date TEXT,
+    user_id INTEGER,
+    FOREIGN KEY (list_id) REFERENCES lists (id),
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
