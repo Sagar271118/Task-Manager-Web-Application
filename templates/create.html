@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Create a New Task{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">🆕 Create a New Task</h2>
+
+    <form method="post" class="w-50 mx-auto shadow p-4 rounded bg-light">
+        <!-- Task Content -->
+        <div class="mb-3">
+            <label for="content" class="form-label">Task Content</label>
+            <input type="text" name="content" id="content"
+                   placeholder="Enter task description"
+                   class="form-control"
+                   value="{{ request.form['content'] if request.form['content'] else '' }}">
+        </div>
+
+        <!-- Select List -->
+        <div class="mb-3">
+            <label for="list" class="form-label">Select List</label>
+            <select class="form-select" name="list" id="list">
+                {% for list in lists %}
+                    {% if list['title'] == request.form['list'] %}
+                        <option value="{{ request.form['list'] }}" selected>
+                            {{ request.form['list'] }}
+                        </option>
+                    {% else %}
+                        <option value="{{ list['title'] }}">
+                            {{ list['title'] }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Due Date -->
+        <div class="mb-3">
+            <label for="due_date" class="form-label">Due Date</label>
+            <input type="date" name="due_date" id="due_date" class="form-control"
+                   value="{{ request.form['due_date'] if request.form['due_date'] else '' }}">
+        </div>
+
+        <!-- Submit & Cancel -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-success px-4">Add Task</button>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
